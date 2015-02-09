@@ -87,7 +87,7 @@ else
     # Roles testing
     for role in ${data_role[@]}; do
       echo "Testing" $role "role"
-      BEAKER_PROJECT=beaker_aws BEAKER_DEPARTMENT=DEV BEAKER_BUILD_URL=http://ec2-54-68-213-13.us-west-2.compute.amazonaws.com:8080/job/puppet-beaker BEAKER_CREATED_BY=fgouteroux BEAKER_git_branch=${branch_name} BEAKER_test_file=${role}.rb BEAKER_validate=no BEAKER_setfile=spec/acceptance/nodesets/${role}.cfg rake beaker:test;
+      BEAKER_PROJECT=beaker_aws BEAKER_DEPARTMENT=DEV BEAKER_BUILD_URL=http://myjenkins:8080/job/puppet-beaker BEAKER_CREATED_BY=jenkins BEAKER_git_branch=${branch_name} BEAKER_test_file=${role}.rb BEAKER_validate=no BEAKER_setfile=spec/acceptance/nodesets/${role}.cfg rake beaker:test;
     done
   fi
 fi
