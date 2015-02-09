@@ -1,0 +1,16 @@
+---
+myjenkins:
+  build: jenkins
+  ports:
+   - "8080:8080"
+  volumes:
+   - /var/jenkins_home
+gitlabdata:
+  build: gitlab-ce/docker
+gitlabapp:  
+  image: beaker_gitlabdata
+  volumes_from:
+   - gitlabdata
+  ports:
+   - "2222:22"
+   - "80:80"
