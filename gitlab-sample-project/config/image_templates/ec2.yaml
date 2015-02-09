@@ -1,0 +1,9 @@
+AMI:
+  debian-wheezy-amd64-west:
+    :image:
+      :foss: ami-3d9cc00d
+    :region: us-west-2
+  ubuntu-14.04-amd64-west:
+    :image:
+      :foss: ami-3d50120d
+    :region: us-west-2
