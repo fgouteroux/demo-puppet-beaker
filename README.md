@@ -28,7 +28,7 @@ Create your project and add a web hook: "http://your-jenkins-server/gitlab/build
 ## Jenkins
 
 
-> Jenkins version has been fixed to the **1.595** and Dockerfile has been created to integrate beaker requirements.
+> Jenkins version has been fixed to the **1.596** and Dockerfile has been created to integrate beaker requirements.
 
 > Docker build source could be retrieved from [here](https://registry.hub.docker.com/_/jenkins/).
 
