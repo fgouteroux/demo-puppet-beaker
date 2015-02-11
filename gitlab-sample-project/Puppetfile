@@ -1,0 +1,31 @@
+forge "http://forge.puppetlabs.com"
+
+mod "apt",
+  :git => "https://github.com/puppetlabs/puppetlabs-apt.git"
+
+mod "apache",
+  :git => "https://github.com/puppetlabs/puppetlabs-apache.git"
+
+mod "concat",
+  :git => "https://github.com/puppetlabs/puppetlabs-concat.git"
+
+mod "inifile",
+  :git => "https://github.com/puppetlabs/puppetlabs-inifile.git"
+
+mod "motd",
+  :git => "https://github.com/puppetlabs/puppetlabs-motd.git"
+
+mod "ntp",
+  :git => "https://github.com/puppetlabs/puppetlabs-ntp.git"
+
+mod "puppetlabs_spec_helper",
+  :git => "https://github.com/puppetlabs/puppetlabs_spec_helper.git"
+
+mod "stdlib",
+  :git => "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+
+mod "roles",
+  :git => "http://192.168.59.103/puppet/roles.git"
+
+mod "profiles",
+  :git => "http://192.168.59.103/puppet/profiles.git"

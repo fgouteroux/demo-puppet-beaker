@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+domain = 'mydomain.com'
+puppet_version = "3.7.4"
+box = 'wheezy64-7.5'
+puppet_env=`git symbolic-ref --short -q HEAD | tr -d '\n'`
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  config.vm.provider :virtualbox do |virtualbox, override|
+    # Every Vagrant virtual environment requires a box to build off of.
+    override.vm.box = "#{box}"
+
+    # The url from where the 'config.vm.box' box will be fetched if it
+    # doesn't already exist on the user's system.
+    # uncomment as soon as the box is uploaded
+    override.vm.box_url = ""
+
+    if Vagrant.has_plugin?("vagrant-cachier")
+      config.cache.scope = :box
+      config.cache.synced_folder_opts = {
+        type: :nfs,
+        mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+      }
+    end
+  end
+
+  config.vm.define :master do |master_config|
+    master_config.vm.box = config.vm.box
+    master_config.vm.host_name = "puppet.#{domain}"
+
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    master_config.vm.network :private_network, ip: '192.168.33.10'
+
+    master_config.vm.provision :shell do |shell|
+      shell.inline = "grep -q client1.#{domain} /etc/hosts || \
+        echo 192.168.33.11 client1.#{domain} puppet >> /etc/hosts"
+    end
+
+    master_config.vm.provision :shell do |shell|
+       shell.path = "bootstrap_puppetmaster.sh"
+       shell.args = "#{puppet_version} #{puppet_env}"
+    end
+  end
+
+  config.vm.define :"app-server-1" do |client_config|
+    client_config.vm.box = config.vm.box
+    client_config.vm.host_name = "app-server-1.#{domain}"
+
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    client_config.vm.network :private_network, ip: '192.168.33.11'
+
+    # If the dns cannot provide a valid IP for the puppet master
+    # we must handle its definition via /etc/hosts
+    client_config.vm.provision :shell do |shell|
+      shell.inline = "grep -q puppet.#{domain} /etc/hosts || \
+        echo 192.168.33.10 puppet.#{domain} puppet >> /etc/hosts"
+    end
+
+    client_config.vm.provision :shell do |pp_install|
+      pp_install.path = "bootstrap_client.sh"
+      pp_install.args = "#{puppet_version} #{puppet_env}"
+    end
+
+    client_config.vm.provision :puppet_server do |client|
+      client.puppet_server = "puppet.#{domain}"
+      client.puppet_node   = "app-server-1.#{domain}"
+      client.options       = "--verbose"
+    end
+  end
+end

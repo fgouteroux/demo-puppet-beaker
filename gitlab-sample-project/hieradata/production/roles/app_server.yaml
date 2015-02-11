@@ -1,0 +1,5 @@
+---
+apache::vhost:
+  'demo1.mydomain.com':
+    port: '80'
+    docroot: '/var/www'

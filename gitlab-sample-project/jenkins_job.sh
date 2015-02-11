@@ -5,7 +5,7 @@ regex_use_case="featureUseCase"
 branch_name=$1
 data_profile=()
 data_role=()
-base_path="sitemodules/d2si/manifests"
+base_path="modules"
 
 echo "============== Checking modifications============"
 
@@ -30,7 +30,7 @@ for tier in hieradata/*; do
 done
 
 # Check if profiles were changed
-profile_modified=$(git show --pretty="format:" --name-only -- "${base_path}/profile")
+profile_modified=$(git show --pretty="format:" --name-only -- "${base_path}/profiles/manifests")
 
 if [[ -z ${profile_modified} ]]; then
   echo "No profiles were changed"
@@ -45,7 +45,7 @@ else
     echo "Profile:" ${profile} "has changed"
 
     # Get all roles whose profile has changed
-    role=$(grep -r -l -E "profile::${profile}$" "${base_path}/role")
+    role=$(grep -r -l -E "profiles::${profile}$" "${base_path}/roles/manifests")
 
     if [[ -z ${role} ]]; then
       echo "No role was found for ${profile} profile"
