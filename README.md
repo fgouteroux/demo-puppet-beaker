@@ -61,7 +61,7 @@ Before using it, you have to:
     remote: http://192.168.59.103/puppet/puppet.git
     basedir: /etc/puppet/environments
 ```
-2/ Create "**roles**" and "**modules**" repositories in your gitlab (files are in modules directory)
+2/ Create "**roles**" and "**modules**" repositories in your gitlab (files are located in modules directory)
 
 3/ Set the repositories addresses in **Puppetfile** at lines 28-31
 
