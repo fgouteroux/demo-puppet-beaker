@@ -31,7 +31,7 @@ Test Automation platform using puppet and beaker on [Amazon Web Services (AWS)](
 
 > Jenkins version has been fixed to the **1.596** and Dockerfile has been created to integrate beaker requirements.
 
-> Docker build source could be retrieved from [here](https://registry.hub.docker.com/_/jenkins/).
+> Docker build source can be retrieved from [here](https://registry.hub.docker.com/_/jenkins/).
 
 
 1. Install the **gitlab-hook plugin**. That will install **git-client** and others dependencies required.
